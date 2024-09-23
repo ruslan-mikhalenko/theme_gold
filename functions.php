@@ -91,12 +91,12 @@ function myGoldRf()
 /* For added atributs teg li in navigation */
 class Custom_Walker_Nav_Menu extends Walker_Nav_Menu
 {
-    // Переопределяем метод start_el, указывая необходимые параметры
+   // Redefining the start_el method by specifying the necessary parameters
     function start_el(&$output, $item, $depth = 0, $args = null, $id = 0)
     {
         $indent = ($depth) ? str_repeat("\t", $depth) : '';
 
-        // Добавляем атрибут itemprop к элементу LI
+        // Adding the itemprop attribute to the LI element
         $classes = empty($item->classes) ? array() : (array) $item->classes;
         $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
         $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
@@ -104,7 +104,7 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu
         $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args);
         $id = $id ? ' id="' . esc_attr($id) . '"' : '';
 
-        // Здесь добавляем itemprop
+        // Here we add itemprop
         $output .= $indent . '<li' . $id . $class_names . ' itemprop="name">';
 
         $atts = array();
@@ -122,7 +122,7 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu
             }
         }
 
-        // Создаем вывод ссылки
+        // Creating a link output
         $item_output = $args->before;
         $item_output .= '<a' . $attributes . '>';
         $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
@@ -132,19 +132,6 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -171,11 +158,7 @@ function register_my_widgets()
 
 
 
-
-
-
-
-// удаляем "Рубрика: ", "Метка: " и т.д. из заголовка архива
+// delete "Category: ", "Label: ", etc. from the archive header
 add_filter('get_the_archive_title', function ($title) {
     return preg_replace('~^[^:]+: ~', '', $title);
 });
@@ -282,9 +265,7 @@ function wpcourses_breadcrumb($sep = ' > ')
 
 
 
-
-
-/* Текстовый редактор в редакторе категории */
+/* Text editor in the category editor */
 function my_category_description($container = '')
 {
     $content = is_object($container) && isset($container->description) ? html_entity_decode($container->description) : '';
@@ -306,7 +287,7 @@ function my_category_description($container = '')
 
 remove_filter('pre_term_description', 'wp_filter_kses');
 remove_filter('term_description', 'wp_kses_data');
-/* фин: редактор в полях - убираем старое поле редактирования */
+/* fin: editor in the fields - remove the old editing field */
 
 function my_remove_category_description()
 {
@@ -322,12 +303,11 @@ function my_remove_category_description()
     }
 }
 
-add_action('admin_head', 'my_remove_category_description');    // фильтр старого поля - скрываем
+add_action('admin_head', 'my_remove_category_description');    // filter the old field - hide it
 
-/* убираем старое поле редактирования */
-add_filter('edit_category_form_fields', 'my_category_description');   // для категорий-рубрик
-add_filter('edit_tag_form_fields', 'my_category_description');        // для меток-тегов
-
+/* removing the old edit field */
+add_filter('edit_category_form_fields', 'my_category_description');   // for rubrics
+add_filter('edit_tag_form_fields', 'my_category_description');        // for tag tags
 
 
 
@@ -384,7 +364,7 @@ add_action('phpmailer_init', 'mihdan_send_smtp_email');
 
 /** */
 
-/** Чтобы отключить разметку схемы Yoast SEO */
+/** To disable Yoast SEO schema markup */
 function disable_yoast_schema_data($data)
 {
     $data = array();
